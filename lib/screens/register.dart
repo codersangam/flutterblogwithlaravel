@@ -34,7 +34,7 @@ class _RegisterState extends State<Register> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('{$response.error}'),
+          content: Text('${response.error}'),
         ),
       );
     }
@@ -51,9 +51,9 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
