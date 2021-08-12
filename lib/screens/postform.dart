@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutterblogwithlaravel/constant.dart';
+import 'package:flutterblogwithlaravel/services/user_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -18,7 +19,7 @@ class _PostFormState extends State<PostForm> {
   bool _loading = false;
 
   File? imageFile;
-  final _picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
 
   Future getImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -27,6 +28,10 @@ class _PostFormState extends State<PostForm> {
         imageFile = File(pickedFile.path);
       });
     }
+  }
+
+  void _createPost() async {
+    String? image = imageFile == null ? null : getStringImage(imageFile);
   }
 
   @override
@@ -38,7 +43,9 @@ class _PostFormState extends State<PostForm> {
       ),
       body: _loading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.red,
+              ),
             )
           : ListView(children: [
               Container(

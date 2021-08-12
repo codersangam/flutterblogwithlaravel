@@ -126,7 +126,9 @@ class _RegisterState extends State<Register> {
                         ),
                         loading
                             ? Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                  color: Colors.red,
+                                ),
                               )
                             : kSizedButton("REGISTER", () {
                                 if (_formKey.currentState!.validate()) {

@@ -36,6 +36,7 @@ class _HomeState extends State<Home> {
       ),
       body: currentIndex == 0 ? Post() : Profile(),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => PostForm()),
@@ -50,6 +51,7 @@ class _HomeState extends State<Home> {
         clipBehavior: Clip.antiAlias,
         shape: CircularNotchedRectangle(),
         child: BottomNavigationBar(
+          selectedItemColor: Colors.red,
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
