@@ -111,7 +111,9 @@ class _LoginScreenState extends State<Login> {
                           ),
                           loading
                               ? Center(
-                                  child: CircularProgressIndicator(),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.red,
+                                  ),
                                 )
                               : kSizedButton("LOGIN", () {
                                   if (_formKey.currentState!.validate()) {

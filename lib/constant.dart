@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 //<---------STRINGS--------->
-const baseURL = 'http://127.0.0.1:8000/api';
+const baseURL = 'https://blog.hariomshop.com/api';
 const loginURL = baseURL + '/login';
 const registerURL = baseURL + '/register';
 const logoutURL = baseURL + '/logout';
