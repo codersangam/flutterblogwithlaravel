@@ -6,8 +6,6 @@ import 'package:flutterblogwithlaravel/screens/login.dart';
 import 'package:flutterblogwithlaravel/services/user_service.dart';
 
 class Loading extends StatefulWidget {
-  const Loading({Key? key}) : super(key: key);
-
   @override
   _LoadingState createState() => _LoadingState();
 }
@@ -15,7 +13,6 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   void _loadUserInfo() async {
     String token = await getToken();
-
     if (token == '') {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Login()), (route) => false);
@@ -28,8 +25,9 @@ class _LoadingState extends State<Loading> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => Login()), (route) => false);
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('${response.error}')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${response.error}'),
+        ));
       }
     }
   }
@@ -37,7 +35,6 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     _loadUserInfo();
-
     super.initState();
   }
 
@@ -45,9 +42,11 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
+      color: Colors.white,
       child: Center(
-        child: CircularProgressIndicator(),
-      ),
+          child: CircularProgressIndicator(
+        color: Colors.red,
+      )),
     );
   }
 }

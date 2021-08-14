@@ -6,21 +6,22 @@ import 'package:flutterblogwithlaravel/models/post.dart';
 import 'package:flutterblogwithlaravel/services/user_service.dart';
 import 'package:http/http.dart' as http;
 
-// Get all Posts
+// get all posts
 Future<ApiResponse> getPosts() async {
   ApiResponse apiResponse = ApiResponse();
-
   try {
     String token = await getToken();
-    final response = await http.get(
-      Uri.parse(postsURL),
-      headers: {'Accept': 'application/json', 'Authorization': 'Bearer $token'},
-    );
+    final response = await http.get(Uri.parse(postsURL), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+    });
+
     switch (response.statusCode) {
       case 200:
         apiResponse.data = jsonDecode(response.body)['posts']
             .map((p) => Post.fromJson(p))
             .toList();
+        // we get list of posts, so we need to map each item to post model
         apiResponse.data as List<dynamic>;
         break;
       case 401:

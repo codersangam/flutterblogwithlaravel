@@ -2,12 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutterblogwithlaravel/constant.dart';
+import 'package:flutterblogwithlaravel/models/api_response.dart';
+import 'package:flutterblogwithlaravel/models/post.dart';
+import 'package:flutterblogwithlaravel/services/post_service.dart';
 import 'package:flutterblogwithlaravel/services/user_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'login.dart';
+
 class PostForm extends StatefulWidget {
-  const PostForm({Key? key}) : super(key: key);
+  final Post? post;
+  final String? title;
+
+  PostForm({this.post, this.title});
 
   @override
   _PostFormState createState() => _PostFormState();
@@ -15,11 +23,11 @@ class PostForm extends StatefulWidget {
 
 class _PostFormState extends State<PostForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController postController = TextEditingController();
+  final TextEditingController postController = TextEditingController();
   bool _loading = false;
 
   File? imageFile;
-  final ImagePicker _picker = ImagePicker();
+  final _picker = ImagePicker();
 
   Future getImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -32,6 +40,36 @@ class _PostFormState extends State<PostForm> {
 
   void _createPost() async {
     String? image = imageFile == null ? null : getStringImage(imageFile);
+    ApiResponse response = await createPost(postController.text, image);
+
+    if (response.error == null) {
+      Navigator.of(context).pop();
+    } else if (response.error == unauthorized) {
+      logout().then(
+        (value) => {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => Login()),
+              (route) => false)
+        },
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${response.error}'),
+        ),
+      );
+      setState(() {
+        _loading = !_loading;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    if (widget.post != null) {
+      postController.text = widget.post!.body ?? '';
+    }
+    super.initState();
   }
 
   @override
@@ -100,6 +138,7 @@ class _PostFormState extends State<PostForm> {
                         setState(() {
                           _loading = !_loading;
                         });
+                        _createPost();
                       }
                     }),
                   ]),
