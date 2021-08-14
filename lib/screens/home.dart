@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterblogwithlaravel/screens/login.dart';
-import 'package:flutterblogwithlaravel/screens/post.dart';
+import 'package:flutterblogwithlaravel/screens/post_screen.dart';
 import 'package:flutterblogwithlaravel/screens/postform.dart';
 import 'package:flutterblogwithlaravel/screens/profile.dart';
 import 'package:flutterblogwithlaravel/services/user_service.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -34,7 +32,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: currentIndex == 0 ? Post() : Profile(),
+      body: currentIndex == 0 ? PostScreen() : Profile(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
